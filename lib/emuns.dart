@@ -1,0 +1,1 @@
+enum SizeType { Height, Width }

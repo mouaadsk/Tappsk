@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/taskWidget.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/task.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/sevices/arcCustomPainter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,11 +13,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _controller;
-
+  Task tempTask = Task(
+    5,
+    0,
+    FontAwesomeIcons.tint,
+    [Color(0xFF045DE9), Color(0xFF09C6F9)],
+  );
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
   }
 
   @override
@@ -23,44 +32,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = getWidth(context);
+    final double screenWidth = getWidth(context),
+        screenHeight = getHeight(context);
     return Scaffold(
       body: SafeArea(
           child: Stack(
         children: [
           Center(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              borderRadius: BorderRadius.circular(screenWidth * .15),
-              enableFeedback: false,
-              onTap: () {
-                print("circle is clicked");
-              },
-              child: Container(
-                width: screenWidth * .3,
-                height: screenWidth * .3,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 3.0, color: Colors.lightBlue),
-                    shape: BoxShape.circle,
-                    color: Colors.white),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xFFfedcb1),
-                        const Color(0xFFFBB1DB)
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  width: screenWidth * 0.27,
-                  height: screenWidth * 0.27,
-                ),
-              ),
+            child: TaskWidget(
+              task: this.tempTask,
+              widgetSize: screenWidth * .3,
             ),
           ),
         ],
