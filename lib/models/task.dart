@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class Task {
+class CircleTask {
   int totalSteps, completedSteps;
   IconData icon;
   List<Color> colors;
   bool isForwardable, isComplet, isBackwardable;
-  Task(int totalSteps, int completedSteps, IconData icon, List<Color> colors) {
+  String taskString;
+  CircleTask(int totalSteps, int completedSteps, IconData icon, List<Color> colors,String taskString) {
     this.totalSteps = totalSteps;
     this.completedSteps = completedSteps;
     this.colors = colors;
     this.icon = icon;
+    this.taskString = taskString;
     this.fillingTheBools();
   }
   int stepForward() {

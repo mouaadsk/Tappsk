@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/taskWidget.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/circleTasksList.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/task.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/sevices/arcCustomPainter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:weather_icons/weather_icons.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/tempVars.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,12 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _controller;
-  Task tempTask = Task(
-    5,
-    0,
-    FontAwesomeIcons.tint,
-    [Color(0xFF045DE9), Color(0xFF09C6F9)],
-  );
+  CircleTask tempTask = tempTasks[3];
   @override
   void initState() {
     super.initState();
@@ -38,12 +31,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: SafeArea(
           child: Stack(
         children: [
-          Center(
-            child: TaskWidget(
-              task: this.tempTask,
-              widgetSize: screenWidth * .3,
-            ),
-          ),
+          CircleTasksList(
+            height: screenWidth * .3,
+            listTasks: tempTasks,
+          )
         ],
       )),
     );
