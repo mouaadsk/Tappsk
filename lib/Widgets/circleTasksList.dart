@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/task.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/circleTaskWidget.dart';
 
 class CircleTasksList extends StatefulWidget {
@@ -17,7 +17,6 @@ class _CircleTasksListState extends State<CircleTasksList>
   AnimationController _animationController;
   Widget _theLeftPart, _theRightPart, _theFinishedElement, _theNextElement;
   int finishedIndex;
-
 
   //! P.S : I am passing this funtion to the CircleWidget, so it is called whenever a taskCircle is finished
   bool startAnimation(int indexOfFinished) {
@@ -51,18 +50,17 @@ class _CircleTasksListState extends State<CircleTasksList>
         ),
       );
       //TODO : saving the right and the left parts of the widget into the variables
-      //! SAving the left part into a widget
+      //! Saving the left part into a widget
       List<Widget> rightPartList = List<Widget>(),
           leftPartList = List<Widget>();
       this
           .widget
           .listTasks
-          .sublist(indexOfFinished + 2)
+          .sublist(0, indexOfFinished)
           .asMap()
           .forEach((index, task) {
-        print("the right part");
-        print("the right part taskText " + task.taskString);
-        rightPartList.add(Container(
+        print("the left part taskText " + task.taskString);
+        leftPartList.add(Container(
           height: this.widget.height * 1.23,
           width: this.widget.height * .86,
           padding: EdgeInsets.symmetric(horizontal: this.widget.height * .03),
@@ -85,15 +83,14 @@ class _CircleTasksListState extends State<CircleTasksList>
       );
       //!------------------------------------------------------------------
 
-      //! Saving the right part into a widget 
+      //! Saving the right part into a widget
       this
           .widget
           .listTasks
-          .sublist(0, indexOfFinished)
+          .sublist(indexOfFinished + 2)
           .asMap()
           .forEach((index, task) {
-        print("the left part taskText " + task.taskString);
-        leftPartList.add(Container(
+        rightPartList.add(Container(
           height: this.widget.height * 1.23,
           width: this.widget.height * .86,
           padding: EdgeInsets.symmetric(horizontal: this.widget.height * .03),
@@ -183,39 +180,37 @@ class _CircleTasksListState extends State<CircleTasksList>
             ),
           )
         : Container(
-          height: this.widget.height * 1.23,
-          child: Stack(children: [
-            Positioned(
-              child: this._theRightPart,
-              left: (this.finishedIndex +
-                      2 -
-                      this._animationController.value) *
-                  this.widget.height *
-                  .86,
-            ),
-            Positioned(
-              child: this._theFinishedElement,
-              left: ((this.widget.height * .86) *
-                      (this.widget.listTasks.length -
-                          this.finishedIndex -
-                          1) *
-                      this._animationController.value) +
-                  this.widget.height * this.finishedIndex * .86,
-            ),
-            Positioned(
-              child: this._theNextElement,
-              left: (this.finishedIndex +
-                      1 -
-                      this._animationController.value) *
-                  this.widget.height *
-                  .86,
-            ),
-            Positioned(
-              left: 0,
-              child: this._theLeftPart,
-            ),
-          ]),
-        );
+            height: this.widget.height * 1.23,
+            child: Stack(children: [
+              Positioned(
+                child: this._theRightPart,
+                left:
+                    (this.finishedIndex + 2 - this._animationController.value) *
+                        this.widget.height *
+                        .86,
+              ),
+              Positioned(
+                child: this._theFinishedElement,
+                left: ((this.widget.height * .86) *
+                        (this.widget.listTasks.length -
+                            this.finishedIndex -
+                            1) *
+                        this._animationController.value) +
+                    this.widget.height * this.finishedIndex * .86,
+              ),
+              Positioned(
+                child: this._theNextElement,
+                left:
+                    (this.finishedIndex + 1 - this._animationController.value) *
+                        this.widget.height *
+                        .86,
+              ),
+              Positioned(
+                left: 0,
+                child: this._theLeftPart,
+              ),
+            ]),
+          );
   }
 
   @override

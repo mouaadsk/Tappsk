@@ -34,6 +34,8 @@ dependencies:
   fluentui_icons: ^0.2.0
   flutter_icons: ^1.1.0
   humanitarian_icons: ^0.1.0
+  google_fonts: ^1.1.0
+  eva_icons_flutter: ^2.0.1
 
 
 dev_dependencies:
