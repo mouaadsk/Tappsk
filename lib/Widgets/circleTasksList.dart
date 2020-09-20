@@ -215,7 +215,6 @@ class _CircleTasksListState extends State<CircleTasksList>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     this._animationController.dispose();
   }

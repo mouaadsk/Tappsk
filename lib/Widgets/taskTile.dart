@@ -36,7 +36,7 @@ class _TaskTileState extends State<TaskTile> {
         Text(
           this.widget.simpleTask.description,
           style: GoogleFonts.rubik(
-            fontSize: screenWidth * .055,
+            fontSize: screenWidth * .04,
             fontWeight: FontWeight.normal,
           ),
         ),
@@ -46,7 +46,7 @@ class _TaskTileState extends State<TaskTile> {
         this.widget.simpleTask.repeated
             ? Icon(
                 EvaIcons.refresh,
-                size: screenWidth * .05,
+                size: screenWidth * .045,
                 color: Colors.grey,
               )
             : SizedBox(),
@@ -55,45 +55,71 @@ class _TaskTileState extends State<TaskTile> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (this.widget.simpleTask == null) {
+      print("the simple task is null");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double screenWidth = getWidth(context),
         screenHeight = getHeight(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.all(Radius.circular(screenWidth * .02)),
-      ),
-      padding: EdgeInsets.all(screenWidth * .03),
-      width: screenWidth * .9,
-      height: screenHeight * .1,
-      child: this.widget.simpleTask.finishDateTime == null
-          ? returnTopWidget(context)
-          : Column(children: [
-              returnTopWidget(context),
-              Container(
-                margin: EdgeInsets.only(left: screenWidth * .1),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.bell,
-                      color: Colors.grey,
-                      size: screenWidth * .04,
-                    ),
-                    SizedBox(width: screenWidth * .01),
-                    Text(
-                      this.widget.simpleTask.todayOrTomorrow() +
-                          " " +
-                          this.widget.simpleTask.getFormattedDateTime(),
-                      style: GoogleFonts.rubik(
-                          fontSize: screenWidth * .04,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ],
-                ),
-              ),
-            ]),
-    );
+    return this.widget.simpleTask != null
+        ? Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius:
+                  BorderRadius.all(Radius.circular(screenWidth * .02)),
+            ),
+            padding: EdgeInsets.all(screenWidth * .03),
+            width: screenWidth * .9,
+            height: screenHeight * .08,
+            child: this.widget.simpleTask.finishDateTime == null
+                ? Material(
+                  type: MaterialType.transparency,
+                  child: returnTopWidget(context))
+                : Material(
+                  type: MaterialType.transparency,
+                    child: Column(children: [
+                      returnTopWidget(context),
+                      Container(
+                        margin: EdgeInsets.only(left: screenWidth * .1),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.bell,
+                              color: Colors.grey,
+                              size: screenWidth * .04,
+                            ),
+                            SizedBox(width: screenWidth * .01),
+                            Text(
+                              this.widget.simpleTask.todayOrTomorrow() +
+                                  " " +
+                                  this.widget.simpleTask.getFormattedDateTime(),
+                              style: GoogleFonts.rubik(
+                                  fontSize: screenWidth * .03,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                      ),
+                    ]),
+                  ),
+          )
+        : Container(
+            decoration: BoxDecoration(
+              color: Colors.lightBlueAccent.withOpacity(0.2),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(screenWidth * .02)),
+            ),
+            padding: EdgeInsets.all(screenWidth * .03),
+            width: screenWidth * .9,
+            height: screenHeight * .08,
+          );
   }
 }

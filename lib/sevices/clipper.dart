@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/emuns.dart';
 
@@ -22,7 +20,6 @@ class CircleBackgroundClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

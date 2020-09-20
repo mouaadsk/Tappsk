@@ -6,6 +6,7 @@ class SimpleTask {
   DateTime finishDateTime;
   Color boxColor;
   bool repeated;
+  int makeBigger = 0;
   SimpleTask(
       {@required this.description,
       this.boxColor = Colors.amber,
@@ -23,5 +24,9 @@ class SimpleTask {
       return "Today";
     else
       return "Tomorrow";
+  }
+  bool reset(){
+    this.makeBigger = 0;
+    return true;
   }
 }

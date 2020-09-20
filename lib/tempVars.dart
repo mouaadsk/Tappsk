@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:humanitarian_icons/humanitarian_icons.dart';
 
 List<CircleTask> tempTasks = [
   CircleTask(

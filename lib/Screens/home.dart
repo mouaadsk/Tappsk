@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/circleTasksList.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/taskTile.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/tasksTileList.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/colorBool.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/listSimpleTasksModel.dart';
@@ -17,11 +14,27 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   CircleTask tempTask = tempTasks[3];
-  List<ColorBool> listSimpleTasks = [
-    ColorBool(color: Colors.amber),
-    ColorBool(color: Colors.black),
-    ColorBool(color: Colors.red),
-    ColorBool(color: Colors.blue),
+  List<SimpleTask> listSimpleTasks = [
+    SimpleTask(
+      boxColor: Colors.amber,
+      description: "Eating dinner",
+      finishDateTime: DateTime.now(),
+    ),
+    SimpleTask(
+      boxColor: Colors.black,
+      description: "Reading a book",
+      finishDateTime: DateTime.now().add(Duration(days: 1)),
+    ),
+    SimpleTask(
+      boxColor: Colors.red,
+      description: "Workout",
+      finishDateTime: DateTime.now().add(Duration(days: 7)),
+    ),
+    SimpleTask(
+      boxColor: Colors.blue,
+      description: "Drinking Water",
+      repeated: true,
+    ),
   ];
   @override
   void initState() {
@@ -38,7 +51,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Stack(
+          child: Column(
         children: [
           // CircleTasksList(
           //   height: screenWidth * .3,
