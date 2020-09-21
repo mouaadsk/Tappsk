@@ -18,27 +18,67 @@ class TaskTileList extends StatefulWidget {
 class _TaskTileListState extends State<TaskTileList> {
   double screenHeight, screenWidth;
   List<SimpleTask> listSimpleTasks = [
-    SimpleTask(
-      boxColor: Colors.lightGreen,
-      description: "Eating vegetables",
-      repeated: true,
-    ),
-    SimpleTask(
-      boxColor: Colors.lightBlue,
-      description: "Drinking more water",
-      repeated: true,
-    ),
-    SimpleTask(
-      boxColor: Colors.redAccent,
-      description: "Rest",
-    ),
-    SimpleTask(
-      boxColor: Colors.purpleAccent,
-      description: "IDK",
-    ),
-  ];
+        SimpleTask(
+          boxColor: Colors.lightGreen,
+          description: "Eating vegetables",
+          repeated: true,
+        ),
+        SimpleTask(
+          boxColor: Colors.lightBlue,
+          description: "Drinking more water",
+          repeated: true,
+        ),
+        SimpleTask(
+          boxColor: Colors.redAccent,
+          description: "Rest",
+        ),
+        SimpleTask(
+          boxColor: Colors.purpleAccent,
+          description: "IDK",
+        ),
+      ],
+      thisWeekSimpleTasks = [
+        SimpleTask(
+          boxColor: Colors.lightGreen,
+          description: "Eating vegetables",
+          repeated: true,
+        ),
+        SimpleTask(
+          boxColor: Colors.lightBlue,
+          description: "Drinking more water",
+          repeated: true,
+        ),
+        SimpleTask(
+          boxColor: Colors.redAccent,
+          description: "Rest",
+        ),
+        SimpleTask(
+          boxColor: Colors.purpleAccent,
+          description: "IDK",
+        ),
+        SimpleTask(
+          boxColor: Colors.amber,
+          description: "Eating dinner",
+          finishDateTime: DateTime.now(),
+        ),
+        SimpleTask(
+          boxColor: Colors.black,
+          description: "Reading a book",
+          finishDateTime: DateTime.now().add(Duration(days: 1)),
+        ),
+        SimpleTask(
+          boxColor: Colors.red,
+          description: "Workout",
+          finishDateTime: DateTime.now().add(Duration(days: 7)),
+        ),
+        SimpleTask(
+          boxColor: Colors.blue,
+          description: "Drinking Water",
+          repeated: true,
+        ),
+      ];
 
-  ListSimpleTasksModel listSimpleTasksModel;
+  ListSimpleTasksModel listSimpleTasksModel, thisWeekListSimpleTasksModel;
   Future<bool> fillTheListOfDragable(
     ListSimpleTasksModel listSimpleTasksModel,
   ) async {
@@ -193,8 +233,11 @@ class _TaskTileListState extends State<TaskTileList> {
     super.initState();
     listSimpleTasksModel = ListSimpleTasksModel(
         listSimpleTasks: listSimpleTasks, title: "Tommorow");
+    thisWeekListSimpleTasksModel = ListSimpleTasksModel(
+        listSimpleTasks: this.thisWeekSimpleTasks, title: "This week");
     this.fillTheListOfDragable(this.widget.listSimpleTasksModel);
     this.fillTheListOfDragable(this.listSimpleTasksModel);
+    this.fillTheListOfDragable(this.thisWeekListSimpleTasksModel);
   }
 
   @override
@@ -204,40 +247,138 @@ class _TaskTileListState extends State<TaskTileList> {
       screenHeight = getHeight(context);
     }
     return this.widget.listSimpleTasksModel.listOfDraggables != null &&
-            this.listSimpleTasksModel.listOfDraggables != null
-        ? SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  this.widget.listSimpleTasksModel.title,
-                  style: GoogleFonts.bebasNeue(
-                    fontSize: screenHeight * 0.05,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.blue,
+            this.listSimpleTasksModel.listOfDraggables != null &&
+            this.thisWeekListSimpleTasksModel.listOfDraggables != null
+        ? Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        this.widget.listSimpleTasksModel.title,
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: screenHeight * 0.05,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * .02),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * .03),
+                        ),
+                        width: screenWidth * .1,
+                        height: screenHeight * .025,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "3/" +
+                              this
+                                  .widget
+                                  .listSimpleTasksModel
+                                  .listSimpleTasks
+                                  .length
+                                  .toString(),
+                          style: GoogleFonts.roboto(color: Colors.grey),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  width: screenWidth * .9,
-                  child: Column(
-                    children: this.widget.listSimpleTasksModel.listOfDraggables,
+                  Container(
+                    width: screenWidth * .9,
+                    child: Column(
+                      children:
+                          this.widget.listSimpleTasksModel.listOfDraggables,
+                    ),
                   ),
-                ),
-                Text(
-                  this.listSimpleTasksModel.title,
-                  style: GoogleFonts.bebasNeue(
-                    fontSize: screenHeight * 0.05,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.blue,
+                  Row(
+                    children: [
+                      Text(
+                        this.listSimpleTasksModel.title,
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: screenHeight * 0.05,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * .02),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * .03),
+                        ),
+                        width: screenWidth * .1,
+                        height: screenHeight * .025,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "1/" +
+                              this
+                                  .listSimpleTasksModel
+                                  .listSimpleTasks
+                                  .length
+                                  .toString(),
+                          style: GoogleFonts.roboto(color: Colors.grey),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  width: screenWidth * .9,
-                  child: Column(
-                    children: this.listSimpleTasksModel.listOfDraggables,
+                  Container(
+                    width: screenWidth * .9,
+                    child: Column(
+                      children: this.listSimpleTasksModel.listOfDraggables,
+                    ),
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      Text(
+                        this.thisWeekListSimpleTasksModel.title,
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: screenHeight * 0.05,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * .02),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * .03),
+                        ),
+                        width: screenWidth * .1,
+                        height: screenHeight * .025,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "2/" +
+                              this
+                                  .thisWeekListSimpleTasksModel
+                                  .listSimpleTasks
+                                  .length
+                                  .toString(),
+                          style: GoogleFonts.roboto(color: Colors.grey),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: screenWidth * .9,
+                    child: Column(
+                      children:
+                          this.thisWeekListSimpleTasksModel.listOfDraggables,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         : Container(color: Colors.amber);

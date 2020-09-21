@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/tasksTileList.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/colorBool.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/listSimpleTasksModel.dart';
@@ -14,6 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   CircleTask tempTask = tempTasks[3];
+  Color color = Colors.transparent;
   List<SimpleTask> listSimpleTasks = [
     SimpleTask(
       boxColor: Colors.amber,
@@ -49,6 +51,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = getWidth(context),
+        screenHeight = getHeight(context);
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -61,6 +65,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             listSimpleTasksModel: ListSimpleTasksModel(
                 listSimpleTasks: this.listSimpleTasks, title: "Today"),
           ),
+          
         ],
       )),
     );

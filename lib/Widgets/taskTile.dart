@@ -19,15 +19,35 @@ class _TaskTileState extends State<TaskTile> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: screenWidth * .06,
-          height: screenWidth * .06,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: screenWidth * .008,
-              color: this.widget.simpleTask.boxColor,
+        InkWell(
+          onTap: (){
+            setState(() {
+              this.widget.simpleTask.completeTask();
+            });
+          },
+          child: Container(
+            width: screenWidth * .06,
+            height: screenWidth * .06,
+            decoration: BoxDecoration(
+              color: this.widget.simpleTask.completed ? this.widget.simpleTask.boxColor : Colors.transparent,
+              border: Border.all(
+                width: screenWidth * .008,
+                color: this.widget.simpleTask.boxColor,
+              ),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(screenWidth * .02)),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(screenWidth * .02)),
+            alignment: Alignment.center,
+            child: this.widget.simpleTask.completed
+                ? Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: screenWidth * .04,
+                  )
+                : Container(
+                    width: 0,
+                    height: 0,
+                  ),
           ),
         ),
         SizedBox(
@@ -79,10 +99,10 @@ class _TaskTileState extends State<TaskTile> {
             height: screenHeight * .08,
             child: this.widget.simpleTask.finishDateTime == null
                 ? Material(
-                  type: MaterialType.transparency,
-                  child: returnTopWidget(context))
+                    type: MaterialType.transparency,
+                    child: returnTopWidget(context))
                 : Material(
-                  type: MaterialType.transparency,
+                    type: MaterialType.transparency,
                     child: Column(children: [
                       returnTopWidget(context),
                       Container(

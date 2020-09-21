@@ -5,7 +5,7 @@ class SimpleTask {
   String description;
   DateTime finishDateTime;
   Color boxColor;
-  bool repeated;
+  bool repeated, completed = false;
   int makeBigger = 0;
   SimpleTask(
       {@required this.description,
@@ -28,5 +28,9 @@ class SimpleTask {
   bool reset(){
     this.makeBigger = 0;
     return true;
+  }
+  bool completeTask() {
+    this.completed = true;
+    return this.completed;
   }
 }
