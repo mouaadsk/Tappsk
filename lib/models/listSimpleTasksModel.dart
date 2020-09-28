@@ -26,10 +26,12 @@ class ListSimpleTasksModel {
     this.listSimpleTasks.removeAt(index);
     return true;
   }
-
+  //!this function deletes the finished tasks and resetes all the paramaters of the list into a zeros
   bool reset() {
-    this.listSimpleTasks.forEach((element) {
+    this.listSimpleTasks.asMap().forEach((index,element) {
+      if(!element.completed)
       element.reset();
+      else this.deleteElementIndex(index);
      });
      this.firstInt = 0;
      this.lastInt = 0;

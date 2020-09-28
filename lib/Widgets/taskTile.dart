@@ -4,6 +4,7 @@ import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/simpleTask.d
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/sevices/rectPercentageClipper.dart';
 
 class TaskTile extends StatefulWidget {
   final SimpleTask simpleTask;
@@ -12,7 +13,23 @@ class TaskTile extends StatefulWidget {
   _TaskTileState createState() => _TaskTileState();
 }
 
-class _TaskTileState extends State<TaskTile> {
+class _TaskTileState extends State<TaskTile>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  bool coloringBox = false;
+  //TODO : turning the task into a finished task then running the animation like it vanishes
+  bool finishTask() {
+    try {
+      this._animationController.forward().then((value) {
+        this.widget.simpleTask.completeTask();
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   //! returning the top widget of the tile
   Widget returnTopWidget(BuildContext context) {
     final screenWidth = getWidth(context);
@@ -20,16 +37,19 @@ class _TaskTileState extends State<TaskTile> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         InkWell(
-          onTap: (){
+          onTap: () {
             setState(() {
-              this.widget.simpleTask.completeTask();
+              this.coloringBox = true;
+              this.finishTask();
             });
           },
           child: Container(
             width: screenWidth * .06,
             height: screenWidth * .06,
             decoration: BoxDecoration(
-              color: this.widget.simpleTask.completed ? this.widget.simpleTask.boxColor : Colors.transparent,
+              color: this.coloringBox
+                  ? this.widget.simpleTask.boxColor
+                  : Colors.transparent,
               border: Border.all(
                 width: screenWidth * .008,
                 color: this.widget.simpleTask.boxColor,
@@ -38,7 +58,7 @@ class _TaskTileState extends State<TaskTile> {
                   BorderRadius.all(Radius.circular(screenWidth * .02)),
             ),
             alignment: Alignment.center,
-            child: this.widget.simpleTask.completed
+            child: this.coloringBox
                 ? Icon(
                     Icons.check,
                     color: Colors.white,
@@ -81,6 +101,12 @@ class _TaskTileState extends State<TaskTile> {
     if (this.widget.simpleTask == null) {
       print("the simple task is null");
     }
+    this._animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 700),
+    )..addListener(() {
+        setState(() {});
+      });
   }
 
   @override
@@ -88,48 +114,61 @@ class _TaskTileState extends State<TaskTile> {
     final double screenWidth = getWidth(context),
         screenHeight = getHeight(context);
     return this.widget.simpleTask != null
-        ? Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius:
-                  BorderRadius.all(Radius.circular(screenWidth * .02)),
-            ),
-            padding: EdgeInsets.all(screenWidth * .03),
-            width: screenWidth * .9,
-            height: screenHeight * .08,
-            child: this.widget.simpleTask.finishDateTime == null
-                ? Material(
-                    type: MaterialType.transparency,
-                    child: returnTopWidget(context))
-                : Material(
-                    type: MaterialType.transparency,
-                    child: Column(children: [
-                      returnTopWidget(context),
-                      Container(
-                        margin: EdgeInsets.only(left: screenWidth * .1),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.bell,
-                              color: Colors.grey,
-                              size: screenWidth * .04,
-                            ),
-                            SizedBox(width: screenWidth * .01),
-                            Text(
-                              this.widget.simpleTask.todayOrTomorrow() +
-                                  " " +
-                                  this.widget.simpleTask.getFormattedDateTime(),
-                              style: GoogleFonts.rubik(
-                                  fontSize: screenWidth * .03,
+        ? ClipPath(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            clipper: RectHeightPercentageClipper(
+                percentage: this._animationController.value),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius:
+                    BorderRadius.all(Radius.circular(screenWidth * .02)),
+              ),
+              padding: EdgeInsets.all(screenWidth * .03),
+              width: screenWidth * .9,
+              height:
+                  screenHeight * .08 * (1 - this._animationController.value),
+              child: this.widget.simpleTask.finishDateTime == null
+                  ? SingleChildScrollView(
+                      child: Material(
+                          type: MaterialType.transparency,
+                          child: returnTopWidget(context)),
+                    )
+                  : SingleChildScrollView(
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: Column(children: [
+                          returnTopWidget(context),
+                          Container(
+                            margin: EdgeInsets.only(left: screenWidth * .1),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.bell,
                                   color: Colors.grey,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
+                                  size: screenWidth * .04,
+                                ),
+                                SizedBox(width: screenWidth * .01),
+                                Text(
+                                  this.widget.simpleTask.todayOrTomorrow() +
+                                      " " +
+                                      this
+                                          .widget
+                                          .simpleTask
+                                          .getFormattedDateTime(),
+                                  style: GoogleFonts.rubik(
+                                      fontSize: screenWidth * .03,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            ),
+                          ),
+                        ]),
                       ),
-                    ]),
-                  ),
+                    ),
+            ),
           )
         : Container(
             decoration: BoxDecoration(
