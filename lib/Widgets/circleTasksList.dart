@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Shared/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/circleTaskWidget.dart';
 
@@ -127,31 +127,33 @@ class _CircleTasksListState extends State<CircleTasksList>
   @override
   void initState() {
     super.initState();
-    this._animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1))
-          ..addListener(() {
-            setState(() {
-              print(this._animationController.value);
-            });
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              //TODO5 : Rearranging the list of tasks in the parent Widget
-              setState(() {
-                List<CircleTask> newTasks = List<CircleTask>();
-                newTasks.addAll(
-                    this.widget.listTasks.sublist(0, this.finishedIndex));
-                newTasks.add(this.widget.listTasks[this.finishedIndex + 1]);
-                newTasks.addAll(
-                    this.widget.listTasks.sublist(this.finishedIndex + 2));
-                newTasks.add(this.widget.listTasks[this.finishedIndex]);
-                this.finishedIndex = null;
-                this._animationController.value = 0;
-                this.widget.listTasks = List<CircleTask>();
-                this.widget.listTasks.addAll(newTasks);
-              });
-            }
+    this._animationController = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {
+          print(this._animationController.value);
+        });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          //TODO5 : Rearranging the list of tasks in the parent Widget
+          setState(() {
+            List<CircleTask> newTasks = List<CircleTask>();
+            newTasks
+                .addAll(this.widget.listTasks.sublist(0, this.finishedIndex));
+            newTasks.add(this.widget.listTasks[this.finishedIndex + 1]);
+            newTasks
+                .addAll(this.widget.listTasks.sublist(this.finishedIndex + 2));
+            newTasks.add(this.widget.listTasks[this.finishedIndex]);
+            this.finishedIndex = null;
+            this._animationController.value = 0;
+            this.widget.listTasks = List<CircleTask>();
+            this.widget.listTasks.addAll(newTasks);
           });
+        }
+      });
   }
 
   @override

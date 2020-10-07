@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/generaleFunctions.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Shared/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/simpleTask.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -74,7 +74,7 @@ class _TaskTileState extends State<TaskTile>
           width: screenWidth * .02,
         ),
         Text(
-          this.widget.simpleTask.description,
+          this.widget.simpleTask.title,
           style: GoogleFonts.rubik(
             fontSize: screenWidth * .04,
             fontWeight: FontWeight.normal,

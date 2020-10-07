@@ -2,11 +2,15 @@ part of 'simpletask_bloc.dart';
 
 @immutable
 abstract class SimpletaskState {
-  const SimpletaskState();
+  final SimpleTask simpleTask;
+  const SimpletaskState({this.simpleTask});
 }
 
 class SimpletaskInitial extends SimpletaskState {
-  const SimpletaskInitial();
+  final SimpleTask simpleTask;
+  const SimpletaskInitial({
+    this.simpleTask,
+  });
 }
 
 class SimpleTaskEditOpened extends SimpletaskState {
@@ -32,4 +36,8 @@ class SimpleTaskEditClosed extends SimpletaskState {
 
 class AnimationIsWorking extends SimpletaskState {
   const AnimationIsWorking();
+}
+
+class InBetweenState extends SimpletaskState {
+  const InBetweenState();
 }

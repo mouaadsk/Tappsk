@@ -15,17 +15,19 @@ class SimpletaskBloc extends Bloc<SimpletaskEvent, SimpletaskState> {
   Stream<SimpletaskState> mapEventToState(
     SimpletaskEvent event,
   ) async* {
+    print("batata");
     if (event is StartAnimation) {
-      event.animationController.forward();
-      while (event.animationController.value != 1) {
-        print(event.animationController.value);
+      try {
+        event.animationController.forward();
         yield AnimationIsWorking();
+        yield SimpleTaskEditOpened(simpleTask: event.simpleTask);
+      } catch (e) {
+        print(e.toString());
       }
     } else if (event is CloseSimpleTaskEdit) {
-      event.animationController.reverse();
-      while (event.animationController.value > 0) {
-        yield SimpleTaskEditClosed();
-      }
+      await event.animationController.reverse();
+      yield SimpleTaskEditClosed();
+      await Future.delayed(Duration(milliseconds: 200), () {});
       yield SimpletaskInitial();
     }
   }

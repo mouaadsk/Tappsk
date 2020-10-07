@@ -26,25 +26,26 @@ class CircleTaskWidgetState extends State<CircleTaskWidget>
     this.oldSteps = this.widget.task.completedSteps;
     this.currentProgress = this.widget.task.completedSteps.toDouble();
     if (this.widget.task.isComplet) this.alreadyComplet = true;
-    this._animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-          ..addListener(() {
-            setState(() {
-              this.currentProgress =
-                  this.oldSteps + this._animationController.value;
-            });
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.dismissed)
-              setState(() {
-                this.oldSteps = this.widget.task.completedSteps;
-                this.currentProgress = this.oldSteps.toDouble();
-              });
-            if (status == AnimationStatus.completed &&
-                this.widget.task.isComplet) {
-              this.widget.startingAnimation(this.widget.index);
-            }
+    this._animationController = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {
+          this.currentProgress =
+              this.oldSteps + this._animationController.value;
+        });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed)
+          setState(() {
+            this.oldSteps = this.widget.task.completedSteps;
+            this.currentProgress = this.oldSteps.toDouble();
           });
+        if (status == AnimationStatus.completed && this.widget.task.isComplet) {
+          this.widget.startingAnimation(this.widget.index);
+        }
+      });
   }
 
   bool stepForward() {
@@ -97,13 +98,13 @@ class CircleTaskWidgetState extends State<CircleTaskWidget>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: this.widget.task.isComplet &&
                               this._animationController.isCompleted ||
                           this.alreadyComplet
                       ? [Color(0xFFD1D1D1), Color(0xFFE7E7E7)]
                       : this.widget.task.colors,
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
               ),
               width: this.widget.widgetSize * .9,
