@@ -19,7 +19,6 @@ class _TextEditOnClickState extends State<TextEditOnClick> {
   FocusNode textFieldFocusNode;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //! in here I added a listener of the focus node to see if the textField is focused ot not (and if it is not I change the field to A text)
     textFieldFocusNode = FocusNode()
@@ -35,9 +34,6 @@ class _TextEditOnClickState extends State<TextEditOnClick> {
     return Container(
       alignment: Alignment.centerLeft,
       height: this.widget.textStyle.fontSize * 1.50,
-      decoration: BoxDecoration(
-        color: Colors.blueAccent,
-      ),
       child: InkWell(
         onTap: () {
           setState(() {
@@ -74,7 +70,6 @@ class _TextEditOnClickState extends State<TextEditOnClick> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     this.textFieldFocusNode.dispose();
   }

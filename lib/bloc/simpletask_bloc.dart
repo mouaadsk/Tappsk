@@ -20,7 +20,7 @@ class SimpletaskBloc extends Bloc<SimpletaskEvent, SimpletaskState> {
       try {
         event.animationController.forward();
         yield AnimationIsWorking();
-        yield SimpleTaskEditOpened(simpleTask: event.simpleTask);
+        yield SimpleTaskEditOpened();
       } catch (e) {
         print(e.toString());
       }

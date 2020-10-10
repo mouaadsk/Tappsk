@@ -38,6 +38,7 @@ dependencies:
   eva_icons_flutter: ^2.0.1
   bloc: ^6.0.3
   flutter_bloc: ^6.0.5
+  flutter_datetime_picker: ^1.4.0
 
 
 dev_dependencies:

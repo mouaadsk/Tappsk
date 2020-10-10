@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Shared/generaleFunctions.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/circletask.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/circleTaskWidget.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/Circle%20Task%20Widgets/circleTaskWidget.dart';
 
 class CircleTasksList extends StatefulWidget {
   List<CircleTask> listTasks;

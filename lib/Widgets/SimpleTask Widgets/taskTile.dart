@@ -128,7 +128,7 @@ class _TaskTileState extends State<TaskTile>
               width: screenWidth * .9,
               height:
                   screenHeight * .08 * (1 - this._animationController.value),
-              child: this.widget.simpleTask.finishDateTime == null
+              child: this.widget.simpleTask.finishingDate == null
                   ? SingleChildScrollView(
                       child: Material(
                           type: MaterialType.transparency,

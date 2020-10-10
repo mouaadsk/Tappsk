@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/taskTile.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Widgets/SimpleTask%20Widgets/taskTile.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/bloc/simpletask_bloc.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/Shared/generaleFunctions.dart';
+import 'package:tappsk_to_do_list_habit_tracker_and_reminder/bloc/simpletaskedit_bloc.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/listSimpleTasksModel.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/simpleTask.dart';
 import 'package:tappsk_to_do_list_habit_tracker_and_reminder/models/subtask.dart';
@@ -72,19 +73,19 @@ class _TaskTileListState extends State<TaskTileList> {
           subtasks: List<SubTask>(),
           boxColor: Colors.amber,
           title: "Eating dinner",
-          finishDateTime: DateTime.now(),
+          finishingDate: DateTime.now(),
         ),
         SimpleTask(
           subtasks: List<SubTask>(),
           boxColor: Colors.black,
           title: "Reading a book",
-          finishDateTime: DateTime.now().add(Duration(days: 1)),
+          finishingDate: DateTime.now().add(Duration(days: 1)),
         ),
         SimpleTask(
           subtasks: List<SubTask>(),
           boxColor: Colors.red,
           title: "Workout",
-          finishDateTime: DateTime.now().add(Duration(days: 7)),
+          finishingDate: DateTime.now().add(Duration(days: 7)),
         ),
         SimpleTask(
           subtasks: List<SubTask>(),
@@ -146,6 +147,8 @@ class _TaskTileListState extends State<TaskTileList> {
             .add(Draggable<MapEntry<int, ListSimpleTasksModel>>(
           child: InkWell(
             onTap: () {
+              //! the OnTap of the TaskTile
+              context.bloc<SimpletaskeditBloc>().add(TaskEdited(simpleTask));
               BlocProvider.of<SimpletaskBloc>(context).add(StartAnimation(
                   animationController: this.widget.editTaskAnimationcontroller,
                   simpleTask: simpleTask));

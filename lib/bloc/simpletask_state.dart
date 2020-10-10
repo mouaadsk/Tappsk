@@ -2,42 +2,32 @@ part of 'simpletask_bloc.dart';
 
 @immutable
 abstract class SimpletaskState {
-  final SimpleTask simpleTask;
-  const SimpletaskState({this.simpleTask});
+  SimpletaskState();
 }
 
 class SimpletaskInitial extends SimpletaskState {
-  final SimpleTask simpleTask;
-  const SimpletaskInitial({
-    this.simpleTask,
-  });
+  SimpletaskInitial();
 }
 
 class SimpleTaskEditOpened extends SimpletaskState {
-  final SimpleTask simpleTask;
-  const SimpleTaskEditOpened({
-    @required this.simpleTask,
-  });
+  SimpleTaskEditOpened();
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is SimpleTaskEditOpened && o.simpleTask == simpleTask;
+    return o is SimpleTaskEditOpened;
   }
-
-  @override
-  int get hashCode => simpleTask.hashCode;
 }
 
 class SimpleTaskEditClosed extends SimpletaskState {
-  const SimpleTaskEditClosed();
+  SimpleTaskEditClosed();
 }
 
 class AnimationIsWorking extends SimpletaskState {
-  const AnimationIsWorking();
+  AnimationIsWorking();
 }
 
 class InBetweenState extends SimpletaskState {
-  const InBetweenState();
+  InBetweenState();
 }
